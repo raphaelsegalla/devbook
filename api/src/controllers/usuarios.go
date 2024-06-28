@@ -6,7 +6,6 @@ import (
 	"api/src/repositorios"
 	"api/src/respostas"
 	"encoding/json"
-	"errors"
 	"io/ioutil"
 	"net/http"
 )
@@ -15,7 +14,6 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	// w.Write([]byte("Criando Usuário!"))
 
 	corpoRequest, erro := ioutil.ReadAll(r.Body)
-	erro = errors.New("Deu Erro!!!!")
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnprocessableEntity, erro)
 		return
