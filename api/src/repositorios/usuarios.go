@@ -37,7 +37,7 @@ func (repositorio usuarios) Criar(usuario modelos.Usuario) (uint64, error) {
 func (repositorio usuarios) Buscar(nomeOuNick string) ([]modelos.Usuario, error) {
 	nomeOuNick = fmt.Sprintf("%%%s%%", nomeOuNick)
 
-	linhas, erro := repositorio.db.Query("select id, nome, email, criadoEm from usuarios where nome LOKE ? or nick Like ?", nomeOuNick, nomeOuNick)
+	linhas, erro := repositorio.db.Query("select id, nome, nick, email, criadoEm from usuarios where nome LIKE ? or nick LIKE ?", nomeOuNick, nomeOuNick)
 	if erro != nil {
 		return nil, erro
 	}
@@ -52,8 +52,8 @@ func (repositorio usuarios) Buscar(nomeOuNick string) ([]modelos.Usuario, error)
 			&usuario.ID,
 			&usuario.Nome,
 			&usuario.Nick,
-			usuario.Email,
-			usuario.CriadoEm,
+			&usuario.Email,
+			&usuario.CriadoEm,
 		); erro != nil {
 			return nil, erro
 		}
