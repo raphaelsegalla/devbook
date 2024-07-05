@@ -29,7 +29,7 @@ func main() {
 	// fmt.Println(config.Porta)
 	// fmt.Println(config.StringConexaoBanco)
 
-	fmt.Printf("Escutando na porta %d", config.Porta)
+	fmt.Printf("Escutando na porta %d \n", config.Porta)
 
 	r := router.Gerar()
 
