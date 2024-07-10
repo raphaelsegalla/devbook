@@ -95,7 +95,7 @@ func (repositorio usuarios) Atualizar(Id uint64, usuario modelos.Usuario) error 
 	}
 	defer statement.Close()
 
-	if _, erro = statement.Exec(usuario.Nome, usuario.Nick, usuario.Email, Id); erro != nil {
+	if _, erro = statement.Exec(usuario.Nome, usuario.Email, usuario.Nick, Id); erro != nil {
 		return erro
 	}
 
@@ -132,4 +132,32 @@ func (repositorio usuarios) BuscarPorEmail(email string) (modelos.Usuario, error
 	}
 
 	return usuario, nil
+}
+
+func (repositorio usuarios) Seguir(usuarioId, seguidorId uint64) error {
+	statement, erro := repositorio.db.Prepare("insert ignore into seguidores (usuario_id, seguidor_id) values (?, ?)")
+	if erro != nil {
+		return erro
+	}
+	defer statement.Close()
+
+	if _, erro = statement.Exec(usuarioId, seguidorId); erro != nil {
+		return erro
+	}
+
+	return nil
+}
+
+func (repositorio usuarios) PararDeSeguir(usuarioId, seguidorId uint64) error {
+	statement, erro := repositorio.db.Prepare("delete from seguidores where usuario_id = ? and seguidor_id = ?")
+	if erro != nil {
+		return erro
+	}
+	defer statement.Close()
+
+	if _, erro = statement.Exec(usuarioId, seguidorId); erro != nil {
+		return erro
+	}
+
+	return nil
 }
