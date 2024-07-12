@@ -369,11 +369,19 @@ func AtualizarSenha(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if erro = seguranca.VerificarSenha(senhaSalvaNoBanco, senha.Atual); erro != nil {
-		respostas.Erro(w, http.StatusUnauthorized, errors.New("A senha atual não condiz com a que sta salva no banco"))
+		respostas.Erro(w, http.StatusUnauthorized, errors.New("a senha atual não condiz com a que sta salva no banco"))
 		return
 	}
 
-	// continuar o desenvolvimento
+	senhaComGash, erro := seguranca.Hash(senha.Nova)
+	if erro != nil {
+		respostas.Erro(w, http.StatusBadRequest, erro)
+		return
+	}
+
+	if erro = repositorio.AtualizarSenha(usuarioId, string(senhaComGash)); erro != nil {
+		respostas.Erro(w, http.StatusInternalServerError, erro)
+	}
 
 	respostas.JSON(w, http.StatusNoContent, nil)
 }

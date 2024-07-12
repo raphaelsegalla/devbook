@@ -243,3 +243,17 @@ func (repositorio usuarios) BuscarSenha(usuarioId uint64) (string, error) {
 
 	return usuario.Senha, nil
 }
+
+func (repositorio usuarios) AtualizarSenha(usuarioId uint64, senha string) error {
+	statement, erro := repositorio.db.Prepare("update from usuarios set senha = ? where id = ?")
+	if erro != nil {
+		return erro
+	}
+	defer statement.Close()
+
+	if _, erro = statement.Exec(senha, usuarioId); erro != nil {
+		return erro
+	}
+
+	return nil
+}
