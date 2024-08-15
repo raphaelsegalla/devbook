@@ -11,7 +11,7 @@ type Publicacao struct {
 	Titulo    string    `json:"titulo,omitempty"`
 	Conteudo  string    `json:"conteudo,omitempty"`
 	AutorID   uint64    `json:"autorId,omitempty"`
-	AutorNick uint64    `json:"autorNick,omitempty"`
+	AutorNick string    `json:"autorNick,omitempty"`
 	Curtidas  uint64    `json:"curtidas"`
 	CriadaEm  time.Time `json:"criadadEm,omitempty"`
 }
@@ -28,11 +28,11 @@ func (publicacao *Publicacao) Preparar() error {
 
 func (publicacao *Publicacao) validar() error {
 	if publicacao.Titulo == "" {
-		return errors.New("O título é obrigatório e nâo pode estar me branco")
+		return errors.New("o título é obrigatório e nâo pode estar me branco")
 	}
 
 	if publicacao.Conteudo == "" {
-		return errors.New("O conteúdo é obrigatório e nâo pode estar me branco")
+		return errors.New("o conteúdo é obrigatório e nâo pode estar me branco")
 	}
 
 	return nil
