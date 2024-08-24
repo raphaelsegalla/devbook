@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -49,5 +50,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte(token))
+	usuarioId := strconv.FormatUint(usuarioSalvoNoBanco.ID, 10)
+
+	// w.Write([]byte(token))
+
+	respostas.JSON(w, http.StatusOK, modelos.DadosAutenticacao{ID: usuarioId, Token: token})
 }
