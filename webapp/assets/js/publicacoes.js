@@ -1,7 +1,10 @@
 $('#nova-publicacao').on('submit', criarPublicacao);
 // $('.curtir-publicacao').on('click', curtirPublicacao);
-$(document).on('click', '.curtir-publicacao', curtirPublicacao)
-$(document).on('click', '.descurtir-publicacao', descurtirPublicacao)
+$(document).on('click', '.curtir-publicacao', curtirPublicacao);
+$(document).on('click', '.descurtir-publicacao', descurtirPublicacao);
+
+$('#atualizar-publicacao').on('click', atualizarPublicacao);
+$('.deletar-publicacao').on('click', deletarPublicacao);
 
 function criarPublicacao(evento) {
     evento.preventDefault();
@@ -70,4 +73,46 @@ function descurtirPublicacao(evento) {
     }).always(function() {
         elementoClicado.prop('disabled', false)
     })
+}
+
+function atualizarPublicacao(evento) {
+    $(this).prop('disabled', true);
+
+    const publicacaoId = $(this).data('publicacao-id');
+
+    $.ajax({
+        url: `/publicacoes/${publicacaoId}`,
+        method: "PUT",
+        data: {
+            titulo: $('#titulo').val(),
+            conteudo: $('#conteudo').val()
+        }
+    }).done(function(evento) {
+        alert("Publicação editada com sucesso!");
+    }).fail(function(evento) {
+        alert("Erro ao editar publicaçâo!");
+    }).always(function() {
+        $('#atualizar-publicacao').prop('disabled', false)
+    })
+}
+
+function deletarPublicacao(evento) {
+    evento.preventDefault();
+
+    const elementoClicado = $(evento.target);
+    const publicacao = elementoClicado.closest('div')
+    const publicacaoId = publicacao.data('publicacao-id');
+
+    elementoClicado.prop('disabled', true)
+
+    $.ajax({
+        url: `/publicacoes/${publicacaoId}`,
+        method: "DELETE"
+    }).done(function() {
+        publicacao.fadeOut("slow", function() {
+            $(this).remove();
+        });
+    }).fail(function() {
+        alert("Erro ao excluir a publicação!")
+    });
 }

@@ -252,7 +252,7 @@ func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respostas.JSON(w, http.StatusOK, nil)
+	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
 func DescurtirPublicacao(w http.ResponseWriter, r *http.Request) {
@@ -276,5 +276,5 @@ func DescurtirPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respostas.JSON(w, http.StatusOK, nil)
+	respostas.JSON(w, http.StatusNoContent, nil)
 }
