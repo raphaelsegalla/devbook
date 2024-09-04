@@ -66,6 +66,8 @@ func BuscarUsuarioCompleto(usuarioId uint64, r *http.Request) (Usuario, error) {
 			if publicacoesCarregadas == nil {
 				return Usuario{}, errors.New("erro  ao buscar as publicações")
 			}
+
+			publicacoes = publicacoesCarregadas
 		}
 	}
 
