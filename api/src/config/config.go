@@ -13,6 +13,8 @@ var (
 	StringConexaoBanco = ""
 	Porta              = 0
 	SecretKey          []byte
+	NewRelicAppName    = ""
+	NewRelicLicense    = ""
 )
 
 func Carregar() {
@@ -34,4 +36,8 @@ func Carregar() {
 	)
 
 	SecretKey = []byte(os.Getenv("SECRET_KEY"))
+
+	NewRelicAppName = os.Getenv("NEWRELIC_APP_NAME")
+
+	NewRelicLicense = os.Getenv("NEWRELIC_LICENSE")
 }

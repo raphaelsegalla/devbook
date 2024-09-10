@@ -27,9 +27,11 @@ import (
 
 func main() {
 
+	config.Carregar()
+
 	app, err := newrelic.NewApplication(
-		newrelic.ConfigAppName("devbook"),
-		newrelic.ConfigLicense("60593c597abe3c4eafc46d420a0b5003FFFFNRAL"),
+		newrelic.ConfigAppName(config.NewRelicAppName),
+		newrelic.ConfigLicense(config.NewRelicLicense),
 		newrelic.ConfigAppLogForwardingEnabled(true),
 	)
 
@@ -53,8 +55,6 @@ func main() {
 			http.Error(w, "Método não permitido", http.StatusMethodNotAllowed)
 		}
 	})
-
-	config.Carregar()
 
 	fmt.Printf("Escutando na porta %d \n", config.Porta)
 
